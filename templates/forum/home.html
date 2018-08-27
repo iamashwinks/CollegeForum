@@ -1,0 +1,31 @@
+{% extends 'forum/base.html' %}
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				
+			</div>
+			<div class="col-md-6">
+				<h2>What is your question?</h2>
+				<form action="/home/" method="POST">
+					{% csrf_token %}
+					<div class="form-group">
+						
+						<textarea class="form-control" name="question" row=3 placeholder="Start your question with 'What','How','Why',etc."></textarea>
+					</div>
+					<button type="submit" class="btn btn-md btn-danger">Ask Question</button>
+				</form>
+				<hr>
+				{% for quest in question %}
+					<h4>{{quest.question}}</h4>
+					<p style="font-size:12px;color:grey">Asked by {{ quest.author }} | {{ quest.datetime }}</p>
+					<a href="/question/{{quest.id}}/"><button type="button" class="btn btn-warning">Answer</button></a>
+					<hr>
+				{% endfor %}
+			</div>
+			<div class="col-md-3">
+				
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'forum/base.html' %}
+{% block body %}
+	<div class="container">
+		<h3>{{ question.question }}</h3>
+		
+		<form action="/question/{{question.id}}/" method="POST">
+			{% csrf_token %}
+			<div class="form-group">
+				<textarea class="form-control" name="answer" row=3 placeholder="Post answer here"></textarea>
+			</div>
+			<button type="submit" class="btn btn-md btn-success">Answer</button>
+		</form>
+		<hr>
+		{% for ans in answer %}
+			<h4>{{ans.answer}}</h4>
+			<p style="font-size:12px;color:grey">Answered by {{ ans.author }} | {{ ans.datetime }} | Upvotes: {{ ans.upvotes }}</p>
+			<a href="/upvote/{{ans.id}}/"><button type="button" class="btn btn-sm btn-warning">Upvote</button></a>
+			<hr>
+		{% endfor %}
+	</div>
+</form>
+</div>
+{% endblock %}
