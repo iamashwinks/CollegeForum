@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from forum.models import Question, Solutions, Upvote, Comment
 from mixpanel import Mixpanel
 
-mp = Mixpanel("3ed3e1ba477dcd296e8989040bdd10c6 " )
+mp = Mixpanel("Your Token Id" )
 
 def signup(request):
 	if request.user.is_authenticated:
