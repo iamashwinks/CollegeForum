@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from forum.models import Question, Solutions, Upvote
+from forum.models import Question, Solutions, Upvote, Comment
+from mixpanel import Mixpanel
+
+mp = Mixpanel("3ed3e1ba477dcd296e8989040bdd10c6 " )
 
 def signup(request):
 	if request.user.is_authenticated:
@@ -21,8 +24,9 @@ def signup(request):
 				user = User.objects.create_user(username=username,
 												password=password1,
 												is_staff = True)
+				mp.track(user.username, f"New user Signed up {user.username}")
 				login(request, user)
-				return redirect('/home/')
+				return redirect('/')
 			else:
 				return render(request, "forum/signup.html", {"error": "The passwords do not match."})
 
@@ -30,20 +34,22 @@ def signup(request):
 
 def signin(request):
 	if request.user.is_authenticated:
-		return redirect("/home/")
+		return redirect("/")
 	
 	if request.method == "POST":
 		username = request.POST.get('name')
 		password = request.POST.get('password')
 
 		user = authenticate(request, username=username, password=password)
+		mp.track(user.username, f"User logged in {user.username}")
 		if user is not None:
 			login(request, user)
-		return redirect("/home/")
+		return redirect("/")
 
 	return render(request, "forum/login.html")
 
 def signout(request):
+	mp.track(str(request.user), f"{request.user} logged out!")
 	logout(request)
 	return redirect("/login/")
 
@@ -52,11 +58,11 @@ def post_question(request):
 		return redirect("/login/")
 
 	if request.method=="POST":
-		
 		text = request.POST.get('question')
 		question = Question(question = text, author=request.user)
+		mp.track(question.question, f'New Question by {question.author}')
 		question.save()
-		return redirect("/home/")
+		return redirect("/")
 
 	question = Question.objects.all().order_by('-datetime')
 	return render(request, "forum/home.html", {"question" : question})
@@ -66,9 +72,11 @@ def question_page(request, qid):
 	if request.method == "POST":
 		answer = request.POST.get('answer', 'Left empty!')
 		ans = Solutions.objects.create(answer=answer, question=q, upvotes=1, author=request.user)
+		mp.track(ans.answer, f'New Answer by {ans.author}')
 		return redirect("/question/{}/".format(q.id))
 
 	answers = Solutions.objects.filter(question = q)
+	mp.track(q.question, f'Clicked on question by {request.user}')
 	return render(request, 'forum/question.html', {"question":q, "answer":answers})
 
 def upvote(request, aid):
@@ -78,6 +86,19 @@ def upvote(request, aid):
 		a.upvotes +=1
 		a.save()
 		u = Upvote(author=request.user, answer=a)
+		mp.track(a.answer, f'New Upvote by {request.user}')
 		u.save()
 	return redirect("/question/{}/".format(a.question.id))
+
+def comment(request, aid):
+	a = Solutions.objects.get(pk=aid)
+	if request.method == "POST":
+		text = request.POST.get('comment')
+		comment = Comment(answer=a, comment=text, author=request.user)
+		comment.save()
+		return redirect("/question/{}/".format(a.question.id))
+
+	reply = Comment.objects.filter(answer = a)
+	return render(request, 'forum/question.html', {"answer":a, "reply" : reply})
+
 

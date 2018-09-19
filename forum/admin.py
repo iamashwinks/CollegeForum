@@ -1,5 +1,5 @@
 from django.contrib import admin
-from forum.models import Question,Solutions
+from forum.models import Question, Solutions, Comment
 
 class QuestionAdmin(admin.ModelAdmin):
 	list_display = ['question', 'author', 'datetime']
@@ -8,3 +8,4 @@ class QuestionAdmin(admin.ModelAdmin):
 
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Solutions)
+admin.site.register(Comment)

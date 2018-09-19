@@ -13,8 +13,22 @@
 		<hr>
 		{% for ans in answer %}
 			<h4>{{ans.answer}}</h4>
-			<p style="font-size:12px;color:grey">Answered by {{ ans.author }} | {{ ans.datetime }} | Upvotes: {{ ans.upvotes }}</p>
+			<p style="font-size:12px;color:grey">Answered by {{ ans.author }} | {{ ans.datetime }} | Upvotes: {{ ans.upvotes }}</p><br>
 			<a href="/upvote/{{ans.id}}/"><button type="button" class="btn btn-sm btn-warning">Upvote</button></a>
+			<form action="/comment/{{ans.id}}/" method="POST"  style="margin-left:50px;">
+				{% csrf_token %}
+				<div class="form-group">
+					<textarea class="form-control" name="comment" placeholder="Reply here"></textarea>
+				</div>
+				<button type="submit" class="btn btn-md btn-success">Reply</button>
+			</form>
+			<p style="color:grey">Total no. of comments: {{ ans.reply.count }}</p>
+			{% for com in ans.reply.all %}
+				<p style="font-size:12px;color:grey">Replied by {{ com.author }} | {{ com.datetime }}</p>
+				<p>{{ com.comment|linebreaks }}</p>
+				{% empty %}
+				<p style="font-size:12px;color:grey">No comments here yet :(</p>
+			{% endfor %}
 			<hr>
 		{% endfor %}
 	</div>
