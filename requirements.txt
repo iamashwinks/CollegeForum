@@ -1,5 +1,0 @@
-Django==2.1
-django-summernote==0.8.10.0
-mixpanel==4.3.2
-pytz==2018.5
-six==1.11.0

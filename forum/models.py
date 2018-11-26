@@ -21,6 +21,10 @@ class Solutions(models.Model):
 	def __str__(self):
 		return "By {} on {} as {}".format(self.author, self.question, self.answer)
 
+	def get_comments(self):
+		q = Comment.objects.filter(answer=self)
+		return q
+		
 	class Meta:
 		verbose_name_plural = 'Solutions'
 

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from forum.models import Question, Solutions, Upvote, Comment
 from mixpanel import Mixpanel
 
-mp = Mixpanel("Your Token Id" )
+mp = Mixpanel("3ed3e1ba477dcd296e8989040bdd10c6 " )
 
 def signup(request):
 	if request.user.is_authenticated:
@@ -14,6 +14,7 @@ def signup(request):
 		username = request.POST.get('name')
 		password1 = request.POST.get('password1')
 		password2 = request.POST.get('password2')
+		full_name = request.POST.get('full_name')
 
 		try:
 			user = User.objects.get(name=username)
@@ -22,10 +23,13 @@ def signup(request):
 			if password1 == password2:
 				#Register
 				user = User.objects.create_user(username=username,
+												full_name = full_name,
 												password=password1,
 												is_staff = True)
-				mp.track(user.username, f"New user Signed up {user.username}")
 				login(request, user)
+				mp.people_set(str(request.user.id), {'$full_name' : f'{user.full_name}',})
+				mp.track(str(request.user.id), "New user signed up")
+				mp.alias(request.user.id, user.username)
 				return redirect('/')
 			else:
 				return render(request, "forum/signup.html", {"error": "The passwords do not match."})
@@ -41,7 +45,7 @@ def signin(request):
 		password = request.POST.get('password')
 
 		user = authenticate(request, username=username, password=password)
-		mp.track(user.username, f"User logged in {user.username}")
+		mp.track(user.username, "User logged in")
 		if user is not None:
 			login(request, user)
 		return redirect("/")
@@ -49,7 +53,7 @@ def signin(request):
 	return render(request, "forum/login.html")
 
 def signout(request):
-	mp.track(str(request.user), f"{request.user} logged out!")
+	mp.track(request.user.username, "User logged out!")
 	logout(request)
 	return redirect("/login/")
 
@@ -58,9 +62,9 @@ def post_question(request):
 		return redirect("/login/")
 
 	if request.method=="POST":
-		text = request.POST.get('question')
+		text = request.POST.get('editordata')
 		question = Question(question = text, author=request.user)
-		mp.track(question.question, f'New Question by {question.author}')
+		mp.track(request.user.username, 'New question',  {"Link":"http://127.0.0.1:8000/", "Question": f"{question.question}"})
 		question.save()
 		return redirect("/")
 
@@ -72,11 +76,12 @@ def question_page(request, qid):
 	if request.method == "POST":
 		answer = request.POST.get('answer', 'Left empty!')
 		ans = Solutions.objects.create(answer=answer, question=q, upvotes=1, author=request.user)
-		mp.track(ans.answer, f'New Answer by {ans.author}')
-		return redirect("/question/{}/".format(q.id))
+		answers = Solutions.objects.filter(question = q)
+		mp.track(request.user.username, 'New answer', {"Question ID": str(q.id), "Link":f"http://127.0.0.1:8000/question/{q.id}/", "Answer" : f"{ans.answer}"})
+		return render(request, 'forum/question.html', {"question":q, "answer":answers})
 
 	answers = Solutions.objects.filter(question = q)
-	mp.track(q.question, f'Clicked on question by {request.user}')
+	mp.track(request.user.username, 'Clicked on question', {"Question ID": str(q.id), "Link":f"http://127.0.0.1:8000/question/{q.id}/"})
 	return render(request, 'forum/question.html', {"question":q, "answer":answers})
 
 def upvote(request, aid):
@@ -86,7 +91,7 @@ def upvote(request, aid):
 		a.upvotes +=1
 		a.save()
 		u = Upvote(author=request.user, answer=a)
-		mp.track(a.answer, f'New Upvote by {request.user}')
+		mp.track(a.answer, 'New upvote')
 		u.save()
 	return redirect("/question/{}/".format(a.question.id))
 
@@ -95,6 +100,7 @@ def comment(request, aid):
 	if request.method == "POST":
 		text = request.POST.get('comment')
 		comment = Comment(answer=a, comment=text, author=request.user)
+		mp.track(comment.comment, "New comment")
 		comment.save()
 		return redirect("/question/{}/".format(a.question.id))
 

@@ -1,26 +1,34 @@
 {% extends 'forum/basesign.html' %}
+{% load static %}
 {% block body %}
 	
-	<form class="container mt-3 rounded" action="/signup/" method="POST" style="max-width: 420px; background-color: #aaa; font-weight: 600; position: absolute; top: 50%; transform: translateY(-50%); margin-left: 500px; padding: 30px; font-family: sans-serif; ">
+	<form action="/signup/" method="POST" style="height: 500px; padding: 40px 30px; margin-top: 50px; margin">
 		{% csrf_token %}
+		<img src="{% static 'images/avatar.png' %}" class="avatar">
+		<center>
 		<h1 style="font-size: 2em; font-weight: bold; margin-bottom: 15px;">Signup</h1>
+		</center>
 		{% if error %}
 			<div class="alert alert-danger" role="alert">{{error}}</div>
 		{% endif %}
 		<div class="form-group" style=" font-size: small;">
-			<label for="exampleInputEmail1">Username</label><br>
+			<label>Username</label><br>
 			<input type="text" class="form-control" name="name" placeholder="Username">
 		</div>
 		<div class="form-group" style=" font-size: small;">
-			<label for="exampleInputPassword1">Password</label><br>
+			<label>Full Name</label><br>
+			<input type="text" class="form-control" name="full_name" placeholder="First Name">
+		</div>
+		<div class="form-group" style=" font-size: small;">
+			<label>Password</label><br>
 			<input type="password" class="form-control" name="password1" placeholder="Password">
 		</div>
 		<div class="form-group" style=" font-size: small;">
-			<label for="exampleInputPassword1">Confirm Password</label><br>
+			<label>Confirm Password</label><br>
 			<input type="password" class="form-control" name="password2" placeholder="Password">
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn btn-primary btn-lg" style="float: right;">Sign Up</button>
+			<button type="submit" class="btn" style="float: center;">Sign Up</button>
 		</div>
 	</form>
 {% endblock %}
