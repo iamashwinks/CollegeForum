@@ -1,40 +1,50 @@
 {% extends 'forum/base.html' %}
 {% load static %}
 {% block body %}
+	<script type="text/javascript" src="{% static 'js/typed.js' %}"></script>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-2">
 			</div>
-			<div class="col-md-6" style="margin-top: 50px;">
-				<h2 style="margin-bottom: 30px;">What is your question?</h2>
-				<form action="/" method="POST">
-					{% csrf_token %}
-					<div class="form-group" style="margin-bottom: 20px;">
-						<textarea id="summernote" name="editordata" class="form-control"></textarea>
-					</div>
-					<button type="submit" class="btn btn-md btn-danger" style="box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08); font-size: 16px;">Ask Question</button>
-				</form>
+			<div class="col-md-8" style="margin-top: 10px;">
+				<center><h1 class="type" style="color: #fff; font-size: 45px; font-weight: 700; margin-bottom: 20px; font-family: Verdana; margin-top: 25px;"></h1>
+				<img src="{% static 'images/img1.jpg' %}"  width="100%" style="margin-top: 5px;"></center>
 				<hr>
-				<span class="badge badge-pill badge-danger" style="margin-bottom: 20px; padding: .875em; color: #f80031; background-color: rgba(251,175,190,.5); text-align: center; border-radius: 0; font-size:18px;">Top Questions:</span><br>
-				{% for quest in question %}
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">{{quest.question}}</h4>
-							<p class="card-text" style="font-size: 12px; color: grey;">Asked by {{ quest.author }} | {{ quest.datetime }}</p>
-							<a href="/question/{{quest.id}}/" class="btn" style="color: #fff;				border-color: #222;	background-color: #222; box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08),0 0 0 0 rgba(255,255,255,.5);
-							font-size: .875rem;">Answer</a>
+				<span class="badge badge-pill badge-danger" style="margin-bottom: 20px; padding: .875em; color: #5e72e4; border-color: #5e72e4; background-color: #ccc; text-align: center; border-radius: 0; font-size:18px; font-weight: 700;">Blog Posts: </span><br>
+				<div class="container">
+					<div class="row">
+						<div class="col-md">
+							{% for post in posts %}
+								<div class="card" style="width: 60rem; display: inline-block; margin-left: 45px;">
+									<div class="card-body">
+										<h3 class="card-title">{{ post.title}}</h3>
+										<p class="card-text">{{ post.body|truncatechars:30 }}</p>
+										<a href="/post/{{post.id}}" class="btn btn-primary">Read more</a>
+									</div>
+								</div>
+								<br><br>
+							{% endfor %}
 						</div>
 					</div>
-					<hr>
-				{% endfor %}
+				</div>
 			</div>
-			<div class="col-md-3">
+			<div>
+				<script type="text/javascript">
+						var typed = new Typed(".type", {
+					strings: ["Hello World!",
+					"Welcome to College Forum",
+					"Ask Questions",
+					"Answer and Discuss",
+					"Plan your Studies"],
+					typeSpeed: 30,
+					backSpeed: 25,
+					loop: true,
+					showCursor: false
+					});
+				</script>
+			</div>
+			<div class="col-md-2">
 			</div>
 		</div>
 	</div>
-	<script>
-	$(document).ready(function() {
-	$('#summernote').summernote();
-	});
-	</script>
 {% endblock %}

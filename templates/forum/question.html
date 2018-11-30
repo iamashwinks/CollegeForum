@@ -24,32 +24,35 @@
 							<p class="card-text" style="font-size: 12px; color: grey;">Answered by {{ ans.author }} | {{ ans.datetime }}</p>
 							<a href="/upvote/{{ans.id}}/" class="btn upvote" style="color: #5e72e4;				border-color: #5e72e4; background-color: transparent; box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08),0 0 0 0 rgba(255,255,255,.5);
 							font-size: .875rem;">Upvote</a>
-							<button type="button" class="btn comment" onclick="return showHideForm('hiddenForm');" style="margin-left: 10px; color: #11cdef; border-color: #11cdef; background-color: transparent; box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08),0 0 0 0 rgba(255,255,255,.5); font-size: .875rem;">Comment</button>
 							<p class="card-text" style="font-size: 12px; color: grey; margin-top: 10px;">Total Upvotes: {{ ans.upvotes }} | Total no. of comments: {{ ans.get_comments.count }}</p>
 						</div>
 					</div>
-					<script type="text/javascript">
-					function showHideForm(formid) {
-					var _form = document.getElementById(formid);
-					_form.style.display = (_form.style.display != "block") ? "block" : "none";
-					return false;
-					}
-					</script>
-					
-					<form action="/comment/{{ans.id}}/" id="hiddenForm" method="POST" style="margin-top: 20px; margin-left: 50px; display: none;">
+					<form action="/comment/{{ans.id}}/" method="POST">
 						{% csrf_token %}
-						<div class="form-group">
-							<textarea  rows="1" cols="20" class="form-control" name="comment" placeholder="Add your Comment."></textarea>
+						<div class="input-group">
+							<span class="input-group-btn">
+								<i class="fas fa-address-card" style="font-size: 36px; margin-top: 12px;"></i>
+							</span>
+							<input class="form-control" name="comment" placeholder="Add your Comment." style="margin-top: 15px;"/>
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-info" style="margin-top: 14px; color: #fff;	border-color: #222;	background-color: #222; box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08),0 0 0 0 rgba(255,255,255,.5); font-size: 14px;">Comment</button>
+							</span>
 						</div>
-						<button type="submit" class="btn btn-md btn-success">Comment</button>
 					</form>
+					<!-- <form action="/comment/{{ans.id}}/" class="container" method="POST" style="margin-top: 20px; margin-left: 50px;">
+										{% csrf_token %}
+										<div class="form-group">
+															<input type="text" class="form-control" name="comment" placeholder="Add your Comment." style="width: 475px;"></input>
+										</div>
+										<button type="button" class="btn" style="margin-left: 10px; color: #11cdef; border-color: #11cdef; background-color: transparent; box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08),0 0 0 0 rgba(255,255,255,.5); font-size: 20px;;">Comment</button>
+					</form>  -->
 					<div class="container" style="margin: 20px 30px;">
 						<span class="badge badge-pill badge-danger" style="margin-bottom: 20px; padding: .875em; color: #f80031; background-color: rgba(251,175,190,.5); text-align: center; border-radius: 0; font-size:14px;">Comments:</span><br>
 						{% for com in ans.get_comments %}
-							<span class="badge badge-pill badge-primary" style="padding: .875em; color: #2643e9;	background-color: rgba(203,210,246,.5); text-align: center; border-radius: 0; font-size:14px; margin-bottom: 20px; margin-right: 200px;">{{ com.comment|linebreaks }}
+							<span class="badge badge-pill badge-primary" style="padding: .875em; color: #2643e9;	background-color: rgba(203,210,246,.5); text-align: center; border-radius: 0; font-size:14px; margin-bottom: 20px; margin-right: 500px; width: 250px;">{{ com.comment|linebreaks|truncatechars:35 }}
 								<p style="font-size:10px; color:grey;">Replied by {{ com.author }} | {{ com.datetime }}</p></span>
 								{% empty %}
-								<span class="badge badge-pill badge-info" style="padding: .875em;color: #03acca; background-color: rgba(136,230,247,.5); text-align: center; border-radius: 0; font-size:14px; margin-bottom: 20px; margin-right: 200px;">
+								<span class="badge badge-pill badge-info" style="padding: .875em;color: #03acca; background-color: rgba(136,230,247,.5); text-align: center; border-radius: 0; font-size:14px; margin-bottom: 20px; margin-right: 500px; width: 250px;">
 								No comments here yet :(</span>
 							{% endfor %}
 						</div>

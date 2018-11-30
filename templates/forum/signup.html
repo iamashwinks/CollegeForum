@@ -2,33 +2,39 @@
 {% load static %}
 {% block body %}
 	
-	<form action="/signup/" method="POST" style="height: 500px; padding: 40px 30px; margin-top: 50px; margin">
+	<form action="/signup/" method="POST" style="height: 530px; padding: 40px 30px; margin-top: 30px; margin">
 		{% csrf_token %}
 		<img src="{% static 'images/avatar.png' %}" class="avatar">
 		<center>
-		<h1 style="font-size: 2em; font-weight: bold; margin-bottom: 15px;">Signup</h1>
+		<h3 style="font-weight: bold; margin-bottom: 5px;">Signup</h3>
 		</center>
 		{% if error %}
 			<div class="alert alert-danger" role="alert">{{error}}</div>
 		{% endif %}
 		<div class="form-group" style=" font-size: small;">
-			<label>Username</label><br>
+			<label style="margin-bottom: 0;">Username</label><br>
 			<input type="text" class="form-control" name="name" placeholder="Username">
 		</div>
 		<div class="form-group" style=" font-size: small;">
-			<label>Full Name</label><br>
-			<input type="text" class="form-control" name="full_name" placeholder="First Name">
+			<label style="margin-bottom: 0;">First Name</label><br>
+			<input type="text" class="form-control" name="first_name" placeholder="First Name">
 		</div>
 		<div class="form-group" style=" font-size: small;">
-			<label>Password</label><br>
+			<label style="margin-bottom: 0;">Last Name</label><br>
+			<input type="text" class="form-control" name="last_name" placeholder="First Name">
+		</div>
+		<div class="form-group" style=" font-size: small;">
+			<label style="margin-bottom: 0;">Password</label><br>
 			<input type="password" class="form-control" name="password1" placeholder="Password">
 		</div>
 		<div class="form-group" style=" font-size: small;">
-			<label>Confirm Password</label><br>
+			<label style="margin-bottom: 0;">Confirm Password</label><br>
 			<input type="password" class="form-control" name="password2" placeholder="Password">
 		</div>
 		<div class="form-group">
-			<button type="submit" class="btn" style="float: center;">Sign Up</button>
+			<center>
+				<button type="submit" class="btn" style="margin-top: 0;">Sign Up</button>
+			</center>
 		</div>
 	</form>
 {% endblock %}

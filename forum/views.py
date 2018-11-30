@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from forum.models import Question, Solutions, Upvote, Comment
+from forum.models import Question, Solutions, Upvote, Comment, BlogPost, BlogComment
+from django.utils import timezone
 from mixpanel import Mixpanel
+import pygal
+from pygal.style import Style
 
 mp = Mixpanel("3ed3e1ba477dcd296e8989040bdd10c6 " )
 
@@ -14,7 +17,8 @@ def signup(request):
 		username = request.POST.get('name')
 		password1 = request.POST.get('password1')
 		password2 = request.POST.get('password2')
-		full_name = request.POST.get('full_name')
+		first_name = request.POST.get('first_name')
+		last_name = request.POST.get('last_name')
 
 		try:
 			user = User.objects.get(name=username)
@@ -23,11 +27,12 @@ def signup(request):
 			if password1 == password2:
 				#Register
 				user = User.objects.create_user(username=username,
-												full_name = full_name,
+												first_name = first_name,
+												last_name = last_name,
 												password=password1,
 												is_staff = True)
 				login(request, user)
-				mp.people_set(str(request.user.id), {'$full_name' : f'{user.full_name}',})
+				mp.people_set(str(request.user.id), {'$first_name' : f'{user.first_name}', '$last_name' : f'{user.last_name}'})
 				mp.track(str(request.user.id), "New user signed up")
 				mp.alias(request.user.id, user.username)
 				return redirect('/')
@@ -57,19 +62,52 @@ def signout(request):
 	logout(request)
 	return redirect("/login/")
 
+def index(request):
+	return render(request,"forum/index.html")	
+
+def home(request):
+	if not request.user.is_authenticated:
+		return redirect("/login/")
+
+	posts = BlogPost.objects.all()
+	return render(request, 'forum/home.html', {'posts': posts})
+
+def post_page(request, post_id):
+	if not request.user.is_authenticated:
+		return redirect("/login/")
+
+	mypost = BlogPost.objects.get(pk=post_id)
+	context = {"post":mypost}
+	return render(request, "forum/post.html", context)
+
+def blogcomment(request, post_id):
+	if not request.user.is_authenticated:
+		return redirect("/login/")
+
+	mypost = BlogPost.objects.get(pk=post_id)
+	if request.method == "POST":
+		text = request.POST.get('comment')
+		comment = BlogComment(post=mypost, comment=text, author=request.user)
+		comment.save()
+		return redirect("/post/{}".format(mypost.id))
+
+	comments = BlogComment.objects.filter(post=mypost)
+	return render(request, 'forum/post.html', {"post":mypost, "comments" : comments})
+
 def post_question(request):
 	if not request.user.is_authenticated:
 		return redirect("/login/")
 
 	if request.method=="POST":
 		text = request.POST.get('editordata')
-		question = Question(question = text, author=request.user)
+		cat = request.POST.get('category')
+		question = Question(question = text, category = cat, author=request.user)
 		mp.track(request.user.username, 'New question',  {"Link":"http://127.0.0.1:8000/", "Question": f"{question.question}"})
 		question.save()
-		return redirect("/")
+		return redirect("/discussion/")
 
 	question = Question.objects.all().order_by('-datetime')
-	return render(request, "forum/home.html", {"question" : question})
+	return render(request, "forum/discussion.html", {"question" : question})
 
 def question_page(request, qid):
 	q = Question.objects.get(pk=qid)
@@ -106,5 +144,4 @@ def comment(request, aid):
 
 	reply = Comment.objects.filter(answer = a)
 	return render(request, 'forum/question.html', {"answer":a, "reply" : reply})
-
 

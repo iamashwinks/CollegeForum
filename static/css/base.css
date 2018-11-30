@@ -1,13 +1,11 @@
 body {
-	  background: #00b09b;  /* fallback for old browsers */
+	  /*background: #00b09b;  
     background: -webkit-linear-gradient(left, #96c93d, #00b09b);
     background: -o-linear-gradient(left, #96c93d, #00b09b);
-    background: linear-gradient(to right, #96c93d, #00b09b);
+    background: linear-gradient(to right, #96c93d, #00b09b);*/
     background-repeat: no-repeat;
     background-size: 100%;
-    background-attachment: fixed;
-    overflow: hidden;
-    overflow-y: scroll;
+    background-attachment: fixed;  
 }
 
 nav {

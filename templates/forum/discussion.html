@@ -1,0 +1,61 @@
+{% extends 'forum/base.html' %}
+{% load static %}
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+			</div>
+			<div class="col-md-6" style="margin-top: 50px;">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-md btn-danger" data-toggle="modal" data-target="#exampleModalCenter" style="margin-top: 5px;float: right; box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08); font-size: 16px;">
+				Ask Question
+				</button>
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h3 class="modal-title" id="exampleModalLongTitle">Ask Question</h3>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<h4 style="margin-bottom: 10px; margin-top:0;">What is your question?</h4>
+								<form action="/" method="POST">
+									{% csrf_token %}
+									<div class="form-group" style="margin-bottom: 10px;">
+										<textarea row=3 name="editordata" class="form-control" placeholder="Start your question with 'What', 'How', 'Why', etc."></textarea>
+									</div>
+									<h4 style="margin-bottom: 10px;">Category: </h2>
+									<div class="form-group" style="margin-bottom: 20px;">
+										<input type="text" name="category" class="form-control" placeholder="enter the category to which it belongs"/>
+									</div>
+									<button type="submit" class="btn btn-md btn-danger" style="box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08); font-size: 16px;">Ask Question</button>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<span class="badge badge-pill badge-danger" style="margin-bottom: 20px; padding: .875em; color: #f80031; background-color: rgba(251,175,190,.5); text-align: center; border-radius: 0; font-size:18px;">Top Questions:</span><br>
+				{% for quest in question %}
+					<div class="card">
+						<div class="card-body">
+							<h4 class="card-title">{{quest.question}}</h4>
+							<h6 class="card-text">Category: {{quest.category}}</h6>
+							<p class="card-text" style="font-size: 12px; color: grey;">Asked by {{ quest.author }} | {{ quest.datetime }}</p>
+							<a href="/question/{{quest.id}}/" class="btn" style="color: #fff;				border-color: #222;	background-color: #222; box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08),0 0 0 0 rgba(255,255,255,.5);
+							font-size: 12px;">Answer</a>
+						</div>
+					</div>
+					<hr>
+				{% endfor %}
+			</div>
+			<div class="col-md-3">
+			</div>
+		</div>
+	</div>
+{% endblock %}
