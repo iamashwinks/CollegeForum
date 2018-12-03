@@ -3,16 +3,16 @@
 {% block body %}
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-2">
 			</div>
-			<div class="col-md-6" style="margin-top: 50px;">
+			<div class="col-md-8" style="margin-top: 50px;">
 				<!-- Button trigger modal -->
 				<button type="button" class="btn btn-md btn-danger" data-toggle="modal" data-target="#exampleModalCenter" style="margin-top: 5px;float: right; box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08); font-size: 16px;">
 				Ask Question
 				</button>
 				<!-- Modal -->
-				<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h3 class="modal-title" id="exampleModalLongTitle">Ask Question</h3>
@@ -25,7 +25,7 @@
 								<form action="/discussion/" method="POST">
 									{% csrf_token %}
 									<div class="form-group" style="margin-bottom: 10px;">
-										<textarea row=3 name="editordata" class="form-control" placeholder="Start your question with 'What', 'How', 'Why', etc."></textarea>
+										<textarea id="summernote" name="editordata" class="form-control"></textarea>
 									</div>
 									<h4 style="margin-bottom: 10px;">Category: </h2>
 									<div class="form-group" style="margin-bottom: 20px;">
@@ -51,7 +51,7 @@
 				{% for quest in question %}
 					<div class="card">
 						<div class="card-body">
-							<h4 class="card-title">{{quest.question}}</h4>
+							<h4 class="card-title">{{quest.question | safe}}</h4>
 							<h6 class="card-text">Category: {{quest.category}}</h6>
 							<p class="card-text" style="font-size: 12px; color: grey;">Asked by {{ quest.author }} | {{ quest.datetime }}</p>
 							<a href="/question/{{quest.id}}/" class="btn" style="color: #fff;				border-color: #222;	background-color: #222; box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08),0 0 0 0 rgba(255,255,255,.5);
@@ -61,8 +61,15 @@
 					<hr>
 				{% endfor %}
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-2">
 			</div>
 		</div>
 	</div>
+	<script>
+		$('#summernote').summernote({
+			placeholder: "Start your question with 'What', 'How', 'Why', etc.",
+			tabsize: 2,
+			height: 100
+		});
+	</script>
 {% endblock %}
