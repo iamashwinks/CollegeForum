@@ -27,7 +27,7 @@
 				</form>
 				<div class="container" style="margin: 20px 30px;">
 					<span class="badge badge-pill badge-danger" style="margin-bottom: 20px; padding: .875em; color: #f80031; background-color: rgba(251,175,190,.5); text-align: center; border-radius: 0; font-size:14px;">Comments:</span><br>
-					{% for com in body.comments %}
+					{% for com in mypost.get_comments %}
 						<span class="badge badge-pill badge-primary" style="padding: .875em; color: #2643e9;	background-color: rgba(203,210,246,.5); text-align: center; border-radius: 0; font-size:14px; margin-bottom: 20px; margin-right: 500px; width: 250px;">{{ com.comment|linebreaks|truncatechars:35 }}
 							<p style="font-size:10px; color:grey;">Replied by {{ com.author }} | {{ com.datetime }}</p></span>
 							{% empty %}

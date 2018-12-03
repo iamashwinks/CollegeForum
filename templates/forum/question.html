@@ -39,13 +39,6 @@
 							</span>
 						</div>
 					</form>
-					<!-- <form action="/comment/{{ans.id}}/" class="container" method="POST" style="margin-top: 20px; margin-left: 50px;">
-										{% csrf_token %}
-										<div class="form-group">
-															<input type="text" class="form-control" name="comment" placeholder="Add your Comment." style="width: 475px;"></input>
-										</div>
-										<button type="button" class="btn" style="margin-left: 10px; color: #11cdef; border-color: #11cdef; background-color: transparent; box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08),0 0 0 0 rgba(255,255,255,.5); font-size: 20px;;">Comment</button>
-					</form>  -->
 					<div class="container" style="margin: 20px 30px;">
 						<span class="badge badge-pill badge-danger" style="margin-bottom: 20px; padding: .875em; color: #f80031; background-color: rgba(251,175,190,.5); text-align: center; border-radius: 0; font-size:14px;">Comments:</span><br>
 						{% for com in ans.get_comments %}

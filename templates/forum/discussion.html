@@ -22,14 +22,21 @@
 							</div>
 							<div class="modal-body">
 								<h4 style="margin-bottom: 10px; margin-top:0;">What is your question?</h4>
-								<form action="/" method="POST">
+								<form action="/discussion/" method="POST">
 									{% csrf_token %}
 									<div class="form-group" style="margin-bottom: 10px;">
 										<textarea row=3 name="editordata" class="form-control" placeholder="Start your question with 'What', 'How', 'Why', etc."></textarea>
 									</div>
 									<h4 style="margin-bottom: 10px;">Category: </h2>
 									<div class="form-group" style="margin-bottom: 20px;">
-										<input type="text" name="category" class="form-control" placeholder="enter the category to which it belongs"/>
+										<select class="custom-select" name="category">
+											<option value="Technical">Technical</option>
+											<option value="Non-Technical">Non-Technical</option>
+											<option value="Web Development">Web Development</option>
+											<option value="Database">Database</option>
+											<option value="Machine Learning">Machine Learning</option>
+											<option value="Others">Others</option>
+										</select>
 									</div>
 									<button type="submit" class="btn btn-md btn-danger" style="box-shadow: 0 4px 6px rgba(50,50,93,.11),0 1px 3px rgba(0,0,0,.08); font-size: 16px;">Ask Question</button>
 								</form>

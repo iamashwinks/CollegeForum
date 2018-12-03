@@ -138,6 +138,18 @@
 		color: #fb2525;
 		padding: 20px 10px;
 		}
+		.text-block {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background-color: #aaa;
+		color: white;
+		width: 400px;
+		padding: 0px 20px;
+		text-align:center;
+		font-family: Verdana;
+		}
 		</style>
 	</head>
 	<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -145,9 +157,9 @@
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav mx-auto">
 					<li><a class="link-3" href="#"><span class="glyphicon glyphicon-globe"></span> Forum </a></li>
-					<li><a class="link-3" href="/index/" style="margin-top: 1px;">About Us</a></li>
-					<li><a class="link-3" href="/signup/">Signup</a></li>
-					<li><a class="link-3" href="/login/">Login</a></li>
+					<li><a class="link-3" href="/index/" style="margin-top: 2px;">About Us</a></li>
+					<li><a class="link-3" href="/login/" style="margin-top: 2px;">Login</a></li>
+					<li><a class="link-3" href="/signup/" style="margin-top: 2px;">Signup</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -162,12 +174,24 @@
 			<div class="carousel-inner" role="listbox">
 				<div class="item active">
 					<img src="{% static 'images/ny.jpg' %}" alt="New York" width="1200" height="700">
+					<div class="text-block">
+						<h1 style="font-size: 40px;">Welcome</h1>
+						<h3 style="font-size: 20px; color: white;">To College Forum</h3>
+					</div>
 				</div>
 				<div class="item">
 					<img src="{% static 'images/chicago.jpg' %}" alt="Chicago" width="1200" height="700">
+					<div class="text-block">
+						<h1 style="font-size: 40px;">Welcome</h1>
+						<h3 style="font-size: 20px; color: white;">To College Forum</h3>
+					</div>
 				</div>
 				<div class="item">
 					<img src="{% static 'images/la.jpg' %}" alt="Los Angeles" width="1200" height="700">
+					<div class="text-block">
+						<h1 style="font-size: 40px;">Welcome</h1>
+						<h3 style="font-size: 20px; color: white;">To College Forum</h3>
+					</div>
 				</div>
 			</div>
 			<!-- Left and right controls -->

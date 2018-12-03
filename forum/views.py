@@ -91,8 +91,8 @@ def blogcomment(request, post_id):
 		comment.save()
 		return redirect("/post/{}".format(mypost.id))
 
-	comments = BlogComment.objects.filter(post=mypost)
-	return render(request, 'forum/post.html', {"post":mypost, "comments" : comments})
+	reply = BlogComment.objects.filter(post=mypost)
+	return render(request, 'forum/post.html', {"post":mypost, "reply" : reply})
 
 def post_question(request):
 	if not request.user.is_authenticated:
