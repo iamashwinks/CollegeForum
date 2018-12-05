@@ -26,7 +26,7 @@ SECRET_KEY = '@ly3qw3#gx&*i(hi4rp)4*btkg#7c72z@^i^!!0gyy$=tvj2_('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["collegeforum.herokuapp.com", "127.0.0.1"]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
