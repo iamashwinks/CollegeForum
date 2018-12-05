@@ -10,7 +10,7 @@
 					<h2> {{ post.title }}</h2>
 					<p> {{ post.date_published }}</p>
 					<hr>
-					<p>{{ post.body }}</p>
+					<p>{{ post.body | linebreaksbr }}</p>
 					<hr>
 				</div>
 				<form action="/blogcomment/{{post.id}}/" method="POST" style="padding: 0 40px;">

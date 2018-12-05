@@ -1,0 +1,30 @@
+body {
+	  /*background: #00b09b;  
+    background: -webkit-linear-gradient(left, #96c93d, #00b09b);
+    background: -o-linear-gradient(left, #96c93d, #00b09b);
+    background: linear-gradient(to right, #96c93d, #00b09b);*/
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;  
+}
+
+nav {
+  text-align: center;
+  font-family: Raleway;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.link-3 {
+  transition: 0.4s;
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 0 10px;
+  margin: 0 10px;
+}
+
+.link-3:hover {
+  background-color: #ffffff;
+  color: #fb2525;
+  padding: 20px 10px;
+}
