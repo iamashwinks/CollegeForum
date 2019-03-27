@@ -17,4 +17,10 @@ urlpatterns = [
     path('', home),
     path('post/<int:post_id>', post_page),
     path('blogcomment/<int:post_id>/', blogcomment),
+    path('oauth/', include('social_django.urls', namespace='social')), 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = ''
+

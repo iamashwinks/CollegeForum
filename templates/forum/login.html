@@ -20,7 +20,11 @@
 		<div class="form-group">
 			<center>
 			<button type="submit" class="btn" >Log In</button>
-		</center>
+			<p><strong>-- OR Login with --</strong></p>
+			<a href="{% url 'social:begin' 'github' %}">GitHub</a> | <a href="{% url 'social:begin' 'twitter' %}">Twitter</a> | 
+			<a href="{% url 'social:begin' 'facebook' %}">Facebook</a>
+			</center>
 		</div>
 	</form>
+	<br>
 {% endblock %}

@@ -6,6 +6,7 @@ from django.utils import timezone
 from mixpanel import Mixpanel
 import pygal
 from pygal.style import Style
+from django.contrib.auth.decorators import login_required
 
 mp = Mixpanel("3ed3e1ba477dcd296e8989040bdd10c6 " )
 
@@ -41,6 +42,7 @@ def signup(request):
 
 	return render(request, "forum/signup.html")
 
+
 def signin(request):
 	if request.user.is_authenticated:
 		return redirect("/")
@@ -65,6 +67,7 @@ def signout(request):
 def index(request):
 	return render(request,"forum/index.html")	
 
+@login_required
 def home(request):
 	if not request.user.is_authenticated:
 		return redirect("/login/")

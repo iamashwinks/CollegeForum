@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',  
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',  
 ]
 
 ROOT_URLCONF = 'collegeforum.urls'
@@ -66,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  
+                'social_django.context_processors.login_redirect', 
             ],
         },
     },
@@ -103,6 +107,27 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout'
+# LOGIN_REDIRECT_URL = ''
+
+SOCIAL_AUTH_GITHUB_KEY = 'bdc7f3a10bcb0ae26dce'
+SOCIAL_AUTH_GITHUB_SECRET = 'af7c48344e38d8e623cdaf54172acfe2f8b952ed'
+
+SOCIAL_AUTH_TWITTER_KEY = 'FyytqEx76OKhVL3bOM3JyR0YG'
+SOCIAL_AUTH_TWITTER_SECRET = 'q8O2nt4kPzqjWQO2tnoU9NZD4qI6AaZxW1g7edeERFpfvJRBY8'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '815631752126315'  
+SOCIAL_AUTH_FACEBOOK_SECRET = '1aeb62ddeec15a1b5ae83a09ff1a0d6b'  
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
