@@ -120,14 +120,14 @@ AUTHENTICATION_BACKENDS = (
 # LOGOUT_URL = 'logout'
 # LOGIN_REDIRECT_URL = ''
 
-SOCIAL_AUTH_GITHUB_KEY = 'bdc7f3a10bcb0ae26dce'
-SOCIAL_AUTH_GITHUB_SECRET = 'af7c48344e38d8e623cdaf54172acfe2f8b952ed'
+SOCIAL_AUTH_GITHUB_KEY = '<your_client_id>'
+SOCIAL_AUTH_GITHUB_SECRET = '<your_client_secret>'
 
-SOCIAL_AUTH_TWITTER_KEY = 'FyytqEx76OKhVL3bOM3JyR0YG'
-SOCIAL_AUTH_TWITTER_SECRET = 'q8O2nt4kPzqjWQO2tnoU9NZD4qI6AaZxW1g7edeERFpfvJRBY8'
+SOCIAL_AUTH_TWITTER_KEY = '<your_client_id>'
+SOCIAL_AUTH_TWITTER_SECRET = '<your_client_secret>'
 
-SOCIAL_AUTH_FACEBOOK_KEY = '815631752126315'  
-SOCIAL_AUTH_FACEBOOK_SECRET = '1aeb62ddeec15a1b5ae83a09ff1a0d6b'  
+SOCIAL_AUTH_FACEBOOK_KEY = '<your_client_id>'  
+SOCIAL_AUTH_FACEBOOK_SECRET = '<your_client_secret>'  
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
