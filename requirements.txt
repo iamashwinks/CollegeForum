@@ -11,7 +11,7 @@ mixpanel==4.3.2
 oauthlib==3.0.1
 psycopg2==2.7.6.1
 pygal==2.4.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 python3-openid==3.1.0
 pytz==2018.7
 requests==2.21.0
